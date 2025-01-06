@@ -1,0 +1,121 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="summary">
+      <ion-label>Total Price: {{ getTotalPrice() | currency }}</ion-label>
+      <ion-label>Expenses: {{ getExpensesTotal() | currency }}</ion-label>
+      <ion-label>Net Total: {{ getNetTotal() | currency }}</ion-label>
+      <ion-label>Date: {{ getTodayDate()  }}</ion-label>
+    </div>
+    <span class="user-label">(User: {{ userEmail }})</span>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()" color="danger">Logout</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+<!-- Add Expense Section -->
+<ion-item class="add-expense">
+  <ion-label position="stacked">Add Expense</ion-label>
+  <ion-input
+    type="text"
+    placeholder="Expense Name"
+    [(ngModel)]="newExpenseName"
+  ></ion-input>
+  <ion-input
+    type="number"
+    placeholder="Expense Amount"
+    [(ngModel)]="newExpenseAmount"
+  ></ion-input>
+  <ion-button
+    (click)="addExpense(newExpenseName, newExpenseAmount)"
+    expand="block"
+    [disabled]="!newExpenseName || !newExpenseAmount"
+  >
+    Add Expense
+  </ion-button>
+</ion-item>
+
+<!-- List of Expenses -->
+<ion-list>
+  <ion-item *ngFor="let expense of expenses">
+    <ion-label>
+      {{ expense.name }}: {{ expense.amount | currency }}
+    </ion-label>
+    <ion-button color="danger" (click)="deleteExpense(expense._id)">
+      Delete
+    </ion-button>
+  </ion-item>
+</ion-list>
+
+
+
+
+
+
+
+
+
+<div style="position: fixed; bottom: 16px; right: 16px; display: flex; align-items: center; gap: 8px;">
+  <!-- Plus Button -->
+  <ion-fab-button 
+    (click)="openAddProductModal()" 
+    style="display: flex; align-items: center; justify-content: center; font-size: 16px; height: 50px; width: 50px;">
+    <span style="font-size: 18px; font-weight: bold; color: white;">+</span>
+  </ion-fab-button>
+
+  <!-- Submit Sales Button -->
+  <ion-button 
+    class="btn btn-primary" 
+    (click)="submitSales()" 
+    style="height: 40px;">
+    Submit Sales
+  </ion-button>
+</div>
+
+  <!-- Dynamic List of Products -->
+   <div class="scroll-container">
+  <ion-list>
+    <ion-item *ngFor="let product of products">
+      <ion-label>
+        {{ product.name }} ({{ product.price | currency }})
+      </ion-label>
+      <ion-buttons class="quantity-buttons">
+        <ion-button (click)="decrement(product)" [disabled]="product.quantity === 0" class="quantity-button">-</ion-button>
+        <ion-label class="quantity-label">{{ product.quantity }}</ion-label>
+        <ion-button (click)="increment(product)" class="quantity-button">+</ion-button>
+    
+
+      </ion-buttons>
+      <ion-label>
+        Total: {{ product.quantity * product.price | currency }}
+      </ion-label>
+      <ion-button color="danger" (click)="deleteProductfrom(product._id)">
+        Delete
+      </ion-button>
+    </ion-item>
+  </ion-list>
+</div>
+</ion-content>
+
+<style>
+  /* Prevent bounce and overscroll behavior globally */
+  ion-content {
+    overscroll-behavior: none; /* Prevent default bounce */
+    scroll-behavior: smooth;  /* Smooth scrolling */
+  }
+
+  /* Scroll container for the list */
+  .scroll-container {
+    height: calc(100vh - 300px); /* Adjust height based on header/footer */
+    overflow-y: auto;           /* Enable scrolling */
+    -webkit-overflow-scrolling: touch; /* Enable momentum scrolling for iOS */
+  }
+
+  /* Target Safari to explicitly disable bounce */
+  @supports (-webkit-touch-callout: none) {
+    .scroll-container {
+      overscroll-behavior: contain; /* Prevent overscroll on Safari */
+    }
+  }
+</style>

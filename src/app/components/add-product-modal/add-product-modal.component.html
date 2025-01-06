@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Add Product</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Input Form for Adding Custom Products -->
+  <ion-item>
+    <ion-label position="floating">Product Name</ion-label>
+    <ion-input [(ngModel)]="newProduct.name"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Product Price</ion-label>
+    <ion-input type="number" [(ngModel)]="newProduct.price"></ion-input>
+  </ion-item>
+  <ion-button expand="block" (click)="addProduct()">Add Product AAA</ion-button>
+</ion-content>
