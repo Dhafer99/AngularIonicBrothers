@@ -128,7 +128,7 @@ getNetTotal(): number {
       console.error('Error deleting product:', error);
     }
   );
-}
+}///test
 deleteExpense(id: string) {
   this.productService.deleteExpense(id).subscribe(
     () => {
