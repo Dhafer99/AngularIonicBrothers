@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, tap } from 'rxjs';
 import {jwtDecode} from 'jwt-decode'; // Import jwt-decode correctly
-import { environment } from 'environment';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
