@@ -56,11 +56,20 @@
 
 
 
-<div style="position: fixed; bottom: 16px; right: 16px; display: flex; align-items: center; gap: 8px;">
+<div style="position: fixed; bottom: 16px; right: 16px; display: flex; align-items: center; gap: 8px; z-index: 1000;">
   <!-- Plus Button -->
   <ion-fab-button 
     (click)="openAddProductModal()" 
-    style="display: flex; align-items: center; justify-content: center; font-size: 16px; height: 50px; width: 50px;">
+    style="
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      font-size: 16px; 
+      height: 50px; 
+      width: 50px; 
+      z-index: 1000;
+      -webkit-tap-highlight-color: transparent; /* Prevent tap highlight */
+    ">
     <span style="font-size: 18px; font-weight: bold; color: white;">+</span>
   </ion-fab-button>
 
@@ -68,10 +77,11 @@
   <ion-button 
     class="btn btn-primary" 
     (click)="submitSales()" 
-    style="height: 40px;">
+    style="height: 40px; z-index: 1000;">
     Submit Sales
   </ion-button>
 </div>
+
 
   <!-- Dynamic List of Products -->
    <div class="scroll-container">
