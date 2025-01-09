@@ -140,51 +140,48 @@ deleteExpense(id: string) {
   );
 }
 
+async openAddProductModal() {
+  const modal = await this.modalController.create({
+    component: AddProductModalComponent,
+  });
 
-  async openAddProductModal() {
-    const modal = await this.modalController.create({
-      component: AddProductModalComponent,
-    });
+  // Handle the modal's result
+  modal.onDidDismiss().then((result) => {
+    console.log(result);
+    if (result.data) {
+      const product = { ...result.data, quantity: 1 };
 
-    // Handle the modal's result
-    modal.onDidDismiss().then((result) => {
+      // Add the product and fetch its ID
+      this.addProduct(product);
+    }
+  });
 
-      console.log(result)
-      if (result.data) {
-        this.products.push({ ...result.data, quantity: 1 });
+  await modal.present();
+}
 
-        const product = {
-          ...result.data,
-          quantity : 1
-        }
-        this.addProduct(product);
-      }
-    });
-
-    await modal.present();
-  }
-
-
-  addProduct(productData:any) {
-    
-  if (productData.name != '' && productData.price > 0) {
-
+addProduct(productData: any) {
+  if (productData.name !== '' && productData.price > 0) {
+    // Call the service to create the product
     this.productService.createProduct(productData).subscribe(
-      ()=> {
-        console.log("product created")
+      (createdProduct) => {
+        // Assuming the backend returns the created product with its ID
+        console.log('Product created:', createdProduct);
+
+        // Push the new product with its fetched ID to the product list
+        this.products.push({ ...createdProduct, quantity: 1 });
+
+        // Reset the form
+        this.newProduct = { _id: '', name: '', price: 0, quantity: 0 };
       },
       (error) => {
-        console.error('Error creating  product:', error);
+        console.error('Error creating product:', error);
       }
-
-    )
-
-    //this.products.push({ name: this.newProduct.name, price: this.newProduct.price, quantity: 0 });
-    this.newProduct = { _id : '',name: '', price: 0 ,quantity : 0}; // Reset the form
+    );
   } else {
     console.error('Invalid product details');
   }
 }
+
 
 
   constructor(private modalController: ModalController,private productService:ProductService,private authService:AuthService,private router:Router) {}
